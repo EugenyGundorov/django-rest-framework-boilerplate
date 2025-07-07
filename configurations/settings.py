@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+import environ  # библиотека django-environ
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -46,9 +46,22 @@ EXTERNAL_APPS = (
 LOCAL_APPS = (
     'app_dir.user',
     'app_dir.module',
+    'chatgpt',
 )
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-INSTALLED_APPS = DEFAULT_APPS + EXTERNAL_APPS + LOCAL_APPS
+# Инициализируем env и загружаем .env
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+CELERY_BROKER_URL = env('REDIS_URL', default='redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+
+INSTALLED_APPS = DEFAULT_APPS + EXTERNAL_APPS + LOCAL_APPS 
+INSTALLED_APPS += ('django_celery_results',)
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -135,9 +148,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
     ),
 }
+
+
 
