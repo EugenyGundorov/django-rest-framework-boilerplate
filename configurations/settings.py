@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v%^q7%_uf+k9@_6zh=z1-0&4%9vagw&yn$m_lad=&yb3(m7o)x'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -93,7 +93,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'configurations.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -153,5 +152,8 @@ REST_FRAMEWORK = {
     ),
 }
 
+CHATGPT_API_KEY = env('CHATGPT_API_KEY')
+SECRET_KEY      = env('SECRET_KEY')
+OPENAI_API_KEY  = env('OPENAI_API_KEY')
 
 
