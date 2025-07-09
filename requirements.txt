@@ -2,10 +2,10 @@
 Django>=4.2
 
 # REST API
-djangorestframework==3.9.1
+djangorestframework>=3.11
 
 # JWT-авторизация
-djangorestframework-simplejwt==5.5.0
+djangorestframework-simplejwt==4.8.0
 
 # работа с .env
 django-environ==0.12.0
