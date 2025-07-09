@@ -141,7 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
