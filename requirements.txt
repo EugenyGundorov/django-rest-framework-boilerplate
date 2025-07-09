@@ -1,5 +1,5 @@
 # веб-фреймворк
-Django==2.2.10
+Django>=4.2
 
 # REST API
 djangorestframework==3.9.1
