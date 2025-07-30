@@ -1,8 +1,8 @@
 import factory
-from faker import Factory
+from faker import Faker
 from django.contrib.auth import get_user_model
 
-faker = Factory.create()
+faker = Faker()
 
 
 class UserFactory(factory.DjangoModelFactory):

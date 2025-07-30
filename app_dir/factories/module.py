@@ -1,8 +1,8 @@
 import factory
-from faker import Factory
+from faker import Faker
 from ..core.loading import get_model
 
-faker = Factory.create()
+faker  = Faker()
 
 
 class ModuleFactory(factory.DjangoModelFactory):
