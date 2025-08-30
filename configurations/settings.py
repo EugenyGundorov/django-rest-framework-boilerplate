@@ -1,3 +1,4 @@
+# DJANGO VERSION COMPAT: 4.2.x
 """
 Django settings for configurations project.
 
@@ -96,11 +97,18 @@ WSGI_APPLICATION = 'configurations.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("POSTGRES_DB", "django_gpt"),
+        "USER": os.getenv("POSTGRES_USER", "django"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "django"),
+        "HOST": os.getenv("POSTGRES_HOST", "localhost"),
+        "PORT": os.getenv("POSTGRES_PORT", "5432"),
+        "CONN_MAX_AGE": 60,
     }
+}
 }
 
 
@@ -158,3 +166,22 @@ SECRET_KEY      = env('SECRET_KEY')
 OPENAI_API_KEY  = env('OPENAI_API_KEY')
 
 
+
+
+
+
+if AWS_STORAGE_BUCKET_NAME:
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+# File validation limits
+FILES_MAX_SIZE_MB = int(os.getenv("FILES_MAX_SIZE_MB", "20"))
+FILES_ALLOWED_MIME = os.getenv("FILES_ALLOWED_MIME", "text/plain,application/pdf,image/png,image/jpeg").split(",")
+
+# Vector backends
+VECTOR_BACKEND = 'pgvector'  # pgvector|qdrant
+QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
+QDRANT_API_KEY = os.getenv("QDRANT_API_KEY", "")
+
+
+# PGVector (requires CREATE EXTENSION vector in your database)
+PGVECTOR_INSTALL = os.getenv("PGVECTOR_INSTALL", "False").lower() in ("1","true","yes")

@@ -68,3 +68,4 @@ Create Super user
 ### Run Tests
     $ python manage.py test
 
+# django_gpt
